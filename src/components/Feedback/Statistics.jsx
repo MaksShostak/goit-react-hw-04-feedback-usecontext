@@ -1,14 +1,12 @@
-import React from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ComponentStat, StatisticsTitle } from './Statistics.styled';
+import { MyContext } from 'components/MyContext/MyContext';
 
-export const Statistics = ({
-  good,
-  neutral,
-  bad,
-  total,
-  positivePercentage,
-}) => {
+export const Statistics = ({ total, positivePercentage }) => {
+  const {
+    state: { good, neutral, bad },
+  } = useContext(MyContext);
   return (
     <>
       <StatisticsTitle>Statistics</StatisticsTitle>

@@ -1,20 +1,19 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { FeedbackOptions } from './FeedbackOptions';
 import { Statistics } from './Statistics';
 import { Notification } from './Notification';
 import { Section } from './Section';
+import { MyContext } from 'components/MyContext/MyContext';
 
 export const Feedback = () => {
-  const [state, setState] = useState({ good: 0, neutral: 0, bad: 0 });
+  const { state } = useContext(MyContext);
 
-  const { good, bad, neutral } = state;
-  const stateKeys = Object.keys(state);
   const stateArr = Object.values(state);
 
-  const addFeedback = option => {
-    console.log(option);
-    setState(prevState => ({ ...prevState, [option]: prevState[option] + 1 }));
-  };
+  // const addFeedback = option => {
+  //   console.log(option);
+  //   setState(prevState => ({ ...prevState, [option]: prevState[option] + 1 }));
+  // };
 
   const countTotalFeedback = () => {
     const totalFeedback = stateArr.reduce((total, state) => {
@@ -31,15 +30,12 @@ export const Feedback = () => {
   return (
     <>
       <Section title={'Please leave feedback'}>
-        <FeedbackOptions options={stateKeys} onLeaveFeedback={addFeedback} />
+        <FeedbackOptions />
         {/* !render */}
         {countTotalFeedback() === 0 ? (
           <Notification message={'There is no feedback'} />
         ) : (
           <Statistics
-            good={good}
-            bad={bad}
-            neutral={neutral}
             total={countTotalFeedback()}
             positivePercentage={countPositiveFeedbackPercentage()}
           />
